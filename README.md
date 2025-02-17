@@ -1,0 +1,2 @@
+# CTStaffControl
+StaffControl Minecraft Plugin
