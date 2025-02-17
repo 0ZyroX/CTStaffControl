@@ -25,7 +25,7 @@ class DisconnectListener @Inject constructor(val proxy: ProxyServer, private val
 
         if (player.hasPermission("ctstaffcontrol.staff")) {
             proxy.allPlayers.forEach { p ->
-                if (p.hasPermission("test")) {
+                if (p.hasPermission("ctstaffcontrol.notify")) {
 
                     val message = MiniMessage.miniMessage().deserialize(
                         configHandler.switchalert
