@@ -1,0 +1,51 @@
+discord:
+  enable: false
+  # WEBHOOK | BOT
+  mode: "BOT"
+
+  bot:
+    token: ""
+    #your server id
+    guild: ""
+    # channel id
+    chatlog-channel: ""
+    switchlog-channel: ""
+    # "ONLINE", "IDLE", "DO_NOT_DISTURB", "INVISIBLE"
+    status: "ONLINE"
+    activity:
+      enable: true
+      #PLAYING, "WATCHING", "LISTENING"
+      type: "WATCHING"
+      message: "Watching {online} Player"
+
+  webhook:
+
+    # Placeholder {player} {uuid}
+    avatar: "https://mc-heads.net/head/{uuid}"
+    username: "{playername}"
+    url: ""
+
+  embed:
+    thumbnail: ""
+    image: ""
+    footer: "Powered By CTStaffControl"
+    # HERE | EVERYONE | ROLE ID | ""
+    tag: ""
+
+  display:
+    server: "Discord"
+    # "NAME" (Nickname), "USERNAME" (Username)
+    playername: "NAME"
+
+  modules:
+    # send chat logs on discord (StaffChat And ...)
+    chatlog: true
+    # send player switch notify
+    switchlog: true
+role-permission:
+  # role id for execute this command in discord (ONLY -BOT- MODE)
+  stafflist: ""
+  staffchat: ""
+  devchat: ""
+  adminchat: ""
+

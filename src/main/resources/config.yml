@@ -1,0 +1,8 @@
+
+# can enable & disable Chats
+staffchat: true
+devchat: true
+adminchat: true
+
+# got notify on staffs join & leave & switch server
+log-notify: true

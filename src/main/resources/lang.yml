@@ -1,0 +1,80 @@
+# Colors (or use web editor : https://webui.advntr.dev/) »
+#
+# &0 -> <black>
+# &1 -> <dark_blue>
+# &2 -> <dark_green>
+# &3 -> <dark_aqua>
+# &4 -> <dark_red>
+# &5 -> <dark_purple>
+# &6 -> <gold>
+# &7 -> <gray>
+# &8 -> <dark_gray>
+# &9 -> <blue>
+# &a -> <green>
+# &b -> <aqua>
+# &c -> <red>
+# &d -> <light_purple>
+# &e -> <yellow>
+# &f -> <white>
+# &b -> <b> </b>
+# &o -> <i> </i>
+# &n -> <u> </u>
+# &m -> <st> </st>
+# &u -> <rainbow></rainbow>
+# &r -> <reset>
+# gradient -> <gradient:[color1]:[color2]> </gradient>
+#
+# Full Document: https://docs.advntr.dev/minimessage/format.html
+
+Format:
+  # PlaceHolders: {group} -> plyaer group name | {prefix} player group prefix | {message} player sended message
+  # PlaceHolders: {server} -> plyaer current server | {playername} player name
+  staffchat: "<dark_gray>[<b><gradient:#A32CC4:#CD47FF>ꜱᴛᴀꜰꜰᴄʜᴀᴛ</gradient><dark_gray></b>] {prefix} <yellow>{playername} <dark_gray>[<gold>{server}<dark_gray>] <gray>➜ <white>{message}"
+  adminchat: "<dark_gray>[<b><gradient:#A32CC4:#CD47FF>ᴀᴅᴍɪɴᴄʜᴀᴛ</gradient><dark_gray></b>] {prefix} <yellow>{playername} <dark_gray>[<gold>{server}<dark_gray>] <gray>➜ <white>{message}"
+  devchat: "<dark_gray>[<b><gradient:#A32CC4:#CD47FF>ᴅᴇᴠᴄʜᴀᴛ</gradient></b><dark_gray>] {prefix} <yellow>{playername} <dark_gray>[<gold>{server}<dark_gray>] <gray>➜ <white>{message}"
+
+stafflist:
+  list_format: "<#A32CC4>| {prefix} <white>{playername} <dark_gray>[<gold>{server}<dark_gray>] <b>{status}</b> <aqua>{lastOnline}"
+  format:
+    - "<dark_purple><st>              </st></dark_purple> <gradient:#A32CC4:#CD47FF>StaffList</gradient> <dark_purple><st>              </st></dark_purple>"
+    - "{list}"
+    - "<dark_purple><st>                                 </st>"
+
+reload: "<gradient:#A32CC4:#CD47FF><b>ꜱᴛᴀꜰꜰᴄᴏɴᴛʀᴏʟ</b></gradient> <gradient:#00FF3B:#00C305>ᴄᴏɴꜰɪɢᴜʀᴀᴛɪᴏɴ ʀᴇʟᴏᴀᴅᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ!</gradient>"
+disabled: "<gradient:#FF1D1D:#FF3737>ᴛʜɪꜱ ᴄᴏᴍᴍᴀɴᴅ ʜᴀꜱ ʙᴇᴇɴ ᴅɪꜱᴀʙʟᴇᴅ ʙʏ ᴛʜᴇ ᴀᴅᴍɪɴɪꜱᴛʀᴀᴛᴏʀ</gradient>"
+player-only: "<gradient:#FF1D1D:#FF3737>ᴏɴʟʏ ᴘʟᴀʏᴇʀꜱ ᴄᴀɴ ᴇxᴇᴄᴜᴛᴇ ᴛʜɪꜱ ᴄᴏᴍᴍᴀɴᴅ</gradient>"
+switch-alert: "<gray>[{prefix} <aqua>{playername} <red>{oldServer} <light_purple>➜ <green>{newServer}<gray>]"
+
+toggle:
+  staffchat-enable: "<gradient:#00FF3B:#00C305>ꜱᴛᴀꜰꜰᴄʜᴀᴛ ᴇɴᴀʙʟᴇᴅ</gradient>"
+  staffchat-disable: "<gradient:#FF1D1D:#FF3737>ꜱᴛᴀꜰꜰᴄʜᴀᴛ ᴅɪꜱᴀʙʟᴇᴅ</gradient>"
+
+  adminchat-enable: "<gradient:#00FF3B:#00C305>ᴀᴅᴍɪɴᴄʜᴀᴛ ᴇɴᴀʙʟᴇᴅ</gradient>"
+  adminchat-disable: "<gradient:#FF1D1D:#FF3737>ᴀᴅᴍɪɴᴄʜᴀᴛ ᴅɪꜱᴀʙʟᴇᴅ</gradient>"
+
+  devchat-enable: "<gradient:#00FF3B:#00C305>ᴅᴇᴠᴄʜᴀᴛ ᴇɴᴀʙʟᴇᴅ</gradient>"
+  devchat-disable: "<gradient:#FF1D1D:#FF3737>ᴅᴇᴠᴄʜᴀᴛ ᴅɪꜱᴀʙʟᴇᴅ</gradient>"
+
+discord:
+  switchlog:
+    title: "Staff Switch Alert"
+    message: "{prefix} ``{playername}`` {oldServer} ➜ {newServer}"
+  chatlog:
+    title: "Staff Chats Logger"
+    message: "{prefix} ``{playername}`` [{server}] ➜ {message}"
+
+  stafflist:
+    title: "Staff List"
+    message: "{prefix} ``{playername}`` [{server}] {status} {lastOnline}"
+  staffchat:
+    title: "Staff Chat"
+    discord-message: "**STAFFCHAT** ``{playername}`` [{server}] ➜ {message}"
+    mc-message: "<dark_gray>[<b><gradient:#A32CC4:#CD47FF>ꜱᴛᴀꜰꜰᴄʜᴀᴛ</gradient><dark_gray></b>] <aqua>{playername} <gray>[<gold>{server}<gray>] <gray>➜ <white>{message}"
+  devchat:
+    title: "Dev Chat"
+    discord-message: "**DEVCHAT** ``{playername}`` [{server}] ➜ {message}"
+    mc-message: "<dark_gray>[<b><gradient:#A32CC4:#CD47FF>ᴅᴇᴠᴄʜᴀᴛ</gradient></b><dark_gray>] <aqua>{playername} <gray>[<gold>{server}<gray>] <gray>➜ <white>{message}"
+  adminchat:
+    title: "Admin Chat"
+    discord-message: "**ADMINCHAT** ``{playername}`` [{server}] ➜ {message}"
+    mc-message: "<dark_gray>[<b><gradient:#A32CC4:#CD47FF>ᴀᴅᴍɪɴᴄʜᴀᴛ</gradient><dark_gray></b>] <aqua>{playername} <gray>[<gold>{server}<gray>] <gray>➜ <white>{message}"
