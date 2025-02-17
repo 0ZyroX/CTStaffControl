@@ -2,7 +2,8 @@
 StaffControl Minecraft Plugin For Control Your Staffs
 
 # Features
-```» StaffChat system.
+```
+» StaffChat system.
 » Admin Chat System.
 » Dev Chat System.
 » StaffList System.
