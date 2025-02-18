@@ -24,7 +24,7 @@ class AdminChatCmd @Inject constructor(
         val adminChatCmd: LiteralCommandNode<CommandSource> = BrigadierCommand.literalArgumentBuilder("adminchat")
             .requires { s -> s.hasPermission("ctstaffcontrol.adminchat.use") }
             .then(
-                BrigadierCommand.requiredArgumentBuilder("message", StringArgumentType.word())
+                BrigadierCommand.requiredArgumentBuilder("message", StringArgumentType.greedyString())
                     .suggests { ctx, builder ->
                         builder.suggest("<message>")
                         builder.buildFuture()

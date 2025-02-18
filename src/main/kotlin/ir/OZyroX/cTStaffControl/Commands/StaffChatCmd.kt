@@ -32,7 +32,7 @@ class StaffChatCmd @Inject constructor(
                 Command.SINGLE_SUCCESS
             }
             .then(
-                BrigadierCommand.requiredArgumentBuilder("message", StringArgumentType.word())
+                BrigadierCommand.requiredArgumentBuilder("message", StringArgumentType.greedyString())
                     .suggests { ctx, builder ->
                         builder.suggest("<message>")
                         builder.buildFuture()
