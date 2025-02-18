@@ -21,9 +21,10 @@ class DisconnectListener @Inject constructor(val proxy: ProxyServer, private val
     fun onPlayerDisconnect(event: DisconnectEvent) {
         val player = event.player
         val (group, prefix, weight) = configHandler.getPlayerGroupInfo(player)
-        val newServerName = SwitchListener(proxy, configHandler).playerServer.toString()
+
 
         if (player.hasPermission("ctstaffcontrol.staff")) {
+            val oldServerName = db.getOldServer(player.uniqueId.toString())
             proxy.allPlayers.forEach { p ->
                 if (p.hasPermission("ctstaffcontrol.notify")) {
 
@@ -31,18 +32,19 @@ class DisconnectListener @Inject constructor(val proxy: ProxyServer, private val
                         configHandler.switchalert
                             .replace("{playername}", player.username)
                             .replace("{prefix}", prefix)
-                            .replace("{oldServer}", newServerName)
+                            .replace("{oldServer}", oldServerName ?: "")
                             .replace("{newServer}", "<red>❌")
                     )
                     p.sendMessage(message)
                 }
             }
+
             db.updateLastOnline(player.uniqueId.toString())
             val check = CheckEnable(configHandler).check()
             if (check) {
                 if (configHandler.discordmoduleSwitch && configHandler.discordmode == "WEBHOOK") {
                     LogHandler(configHandler, proxy).finalWebhookDc(
-                        newServerName,
+                        oldServerName ?: "",
                         player.username,
                         configHandler.switchMessage,
                         prefix,

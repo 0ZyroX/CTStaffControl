@@ -11,6 +11,7 @@ class DBManager {
     fun runDB(){
         connect()
         createTable()
+        addMissingColumns()
     }
 
     fun connect(): Connection? {
@@ -45,7 +46,8 @@ class DBManager {
             rank TEXT NOT NULL,
             lastLogin TEXT DEFAULT 'Never',
             prefix TEXT NOT NULL,
-            weight INTEGER NOT NULL
+            weight INTEGER NOT NULL,
+            oldServer TEXT NULL
         )
     """
         connection?.use {
@@ -53,6 +55,39 @@ class DBManager {
             statement.execute(sql)
         }
     }
+
+    fun addMissingColumns() {
+        val connection = connect()
+
+        val columnsToCheck = mapOf(
+            "id" to "INTEGER PRIMARY KEY AUTOINCREMENT",
+            "name" to "TEXT NOT NULL",
+            "uuid" to "TEXT NOT NULL",
+            "rank" to "TEXT NOT NULL",
+            "lastLogin" to "TEXT DEFAULT 'Never'",
+            "prefix" to "TEXT NOT NULL",
+            "weight" to "INTEGER NOT NULL",
+            "oldServer" to "TEXT NULL"
+        )
+
+        connection?.use { conn ->
+            val checkQuery = "PRAGMA table_info(staffs)"
+            val resultSet = conn.createStatement().executeQuery(checkQuery)
+
+            val existingColumns = mutableSetOf<String>()
+            while (resultSet.next()) {
+                existingColumns.add(resultSet.getString("name"))
+            }
+
+            for ((column, type) in columnsToCheck) {
+                if (!existingColumns.contains(column)) {
+                    val alterQuery = "ALTER TABLE staffs ADD COLUMN $column $type"
+                    conn.createStatement().execute(alterQuery)
+                }
+            }
+        }
+    }
+
 
 
     fun insertData(name: String, uuid: String, rank: String, prefix: String, weight: Int) {
@@ -187,4 +222,58 @@ class DBManager {
 
         return null
     }
+
+    fun updateOldServer(uuid: String, oldserver: String?) {
+        val connection = connect()
+        val updateSql = "UPDATE staffs SET oldServer = ? WHERE uuid = ?"
+
+        connection?.use { conn ->
+            val preparedStatement = conn.prepareStatement(updateSql)
+            if (oldserver == null) {
+                preparedStatement.setNull(1, java.sql.Types.VARCHAR)
+            } else {
+                preparedStatement.setString(1, oldserver)
+            }
+            preparedStatement.setString(2, uuid)
+            preparedStatement.executeUpdate()
+        }
+    }
+
+
+    fun getOldServer(uuid: String): String? {
+        val connection = connect()
+        val query = "SELECT oldServer FROM staffs WHERE uuid = ?"
+
+        connection?.use { conn ->
+            val preparedStatement = conn.prepareStatement(query)
+            preparedStatement.setString(1, uuid)
+
+            val resultSet = preparedStatement.executeQuery()
+            if (resultSet.next()) {
+                return resultSet.getString("oldServer")
+            }
+        }
+
+        return null
+    }
+
+    fun deleteStaff(uuid: String) {
+        val connection = connect()
+        val checkSql = "SELECT COUNT(*) FROM staffs WHERE uuid = ?"
+        val deleteSql = "DELETE FROM staffs WHERE uuid = ?"
+
+        connection?.use { conn ->
+            val checkStatement = conn.prepareStatement(checkSql)
+            checkStatement.setString(1, uuid)
+            val resultSet = checkStatement.executeQuery()
+
+            if (resultSet.next() && resultSet.getInt(1) > 0) {
+                val deleteStatement = conn.prepareStatement(deleteSql)
+                deleteStatement.setString(1, uuid)
+                deleteStatement.executeUpdate()
+            }
+        }
+    }
+
+
 }

@@ -7,6 +7,7 @@ import com.velocitypowered.api.proxy.Player
 import com.velocitypowered.api.proxy.ProxyServer
 import ir.OZyroX.cTStaffControl.Discord.CheckEnable
 import ir.OZyroX.cTStaffControl.Events.ConfigHandler
+import ir.OZyroX.cTStaffControl.Events.DBManager
 import ir.OZyroX.cTStaffControl.Events.LogHandler
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
@@ -22,6 +23,7 @@ class SwitchListener @Inject constructor(
 ) {
 
     val playerServer = mutableMapOf<Player, String>()
+    val db = DBManager()
 
 
     @Subscribe
@@ -32,6 +34,13 @@ class SwitchListener @Inject constructor(
 
 
         val previousServerName = event.previousServer.map { it.serverInfo.name }.orElse("")
+        try {
+            db.updateOldServer(player.uniqueId.toString(), newServerName)
+        } catch (e: Exception) {
+            println(e.message)
+        }
+
+
         if (configHandler.lognotify) {
             if (player.hasPermission("ctstaffcontrol.staff")) {
                 proxy.allPlayers.forEach { p ->
@@ -50,10 +59,12 @@ class SwitchListener @Inject constructor(
 
                         p.sendMessage(message)
                         playerServer[player] = newServerName
+
                     }
                 }
             }
         }
+
         val check = CheckEnable(configHandler).check()
         if (check) {
             if (player.hasPermission("ctstaffcontrol.staff")) {

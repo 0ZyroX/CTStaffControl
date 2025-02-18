@@ -210,7 +210,7 @@ class ConfigHandler @Inject constructor(){
             discordbotactivityMessage = discordbotactivity["message"] as? String ?: "Watching {online} Player"
 
             discordchatlogwebhook = discord["chatlog-webhook"] as? Map<String, Any> ?: emptyMap()
-            discordswitchlogwebhook = discord["chatlog-webhook"] as? Map<String, Any> ?: emptyMap()
+            discordswitchlogwebhook = discord["switchlog-webhook"] as? Map<String, Any> ?: emptyMap()
             discordembed = discord["embed"] as? Map<String, Any> ?: emptyMap()
 
             discordchatlogwebhookAvatar = discordchatlogwebhook["avatar"] as? String ?: "https://mc-heads.net/head/{uuid}"

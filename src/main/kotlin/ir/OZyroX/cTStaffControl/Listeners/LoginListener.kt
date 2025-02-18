@@ -35,7 +35,8 @@ class LoginListener {
             val lpGroup = groupManager.getGroup(group)
             weight = lpGroup?.weight?.orElse(0) ?: 0
 
-
+            if (!p.hasPermission("ctstaffcontrol.staff"))
+                dbHandler.deleteStaff(uuid.toString())
 
 
             if (p.hasPermission("ctstaffcontrol.staff") && playerGroup != "default") {
