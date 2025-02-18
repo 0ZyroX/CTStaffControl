@@ -21,13 +21,15 @@ discord:
   chatlog-webhook:
 
     # Placeholder {player} {uuid}
-    avatar: "https://mc-heads.net/head/{uuid}"
+    avatar: "https://mc-heads.net/head/{player}"
+    # Placeholder {playername}
     username: "{playername}"
     url: ""
   switchlog-webhook:
 
     # Placeholder {player} {uuid}
-    avatar: "https://mc-heads.net/head/{uuid}"
+    avatar: "https://mc-heads.net/head/{player}"
+    # Placeholder {playername}
     username: "{playername}"
     url: ""
 
