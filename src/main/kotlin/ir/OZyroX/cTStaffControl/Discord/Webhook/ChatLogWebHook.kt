@@ -15,7 +15,7 @@ class ChatLogWebHook @Inject constructor(val config : ConfigHandler){
     }
 
 
-    val url = config.discordwebhookUrl
+    val url = config.discordchatlogwebhookUrl
     val tag = config.discordwebhookTag
     var finalTag = ""
 

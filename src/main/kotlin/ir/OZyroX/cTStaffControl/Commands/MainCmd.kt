@@ -52,7 +52,7 @@ class MainCmd @Inject constructor(
                         val check = CheckEnable(configHandler).check()
                         val formattedMessage = configHandler.reload
                         val source = context.source
-                        configHandler.ReloadConfig()
+                        configHandler.loadDiscord()
                         source.sendMessage(MiniMessage.miniMessage().deserialize(formattedMessage))
                         if (check){
                             if (configHandler.discordmode == "BOT"){

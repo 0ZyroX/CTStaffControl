@@ -12,8 +12,10 @@ import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
 class LogHandler @Inject constructor(val config : ConfigHandler, val proxy : ProxyServer) {
 
     val chatlogmsg = config.chatlogMessage
-    val username = config.discordwebhookUsername
-    val avatar = config.discordwebhookAvatar
+    val chatusername = config.discordchatlogwebhookUsername
+    val chatavatar = config.discordchatlogwebhookAvatar
+    val switchusername = config.discordswitchlogwebhookUsername
+    val switchavatar = config.discordswitchlogwebhookAvatar
     val title = config.chatlogTitle
     val titleS = config.switchTitle
     val footer = config.discordwebhookFooter
@@ -25,8 +27,8 @@ class LogHandler @Inject constructor(val config : ConfigHandler, val proxy : Pro
 
 
         val discordmsg = chatLog(serverName, username, msg, prefix, group)
-        val usern = username(serverName, username, msg, prefix, group, uuid)
-        val avatar = avatar(serverName, username, msg, prefix, group, uuid)
+        val usern = chatusername(serverName, username, msg, prefix, group, uuid)
+        val avatar = chatavatar(serverName, username, msg, prefix, group, uuid)
         val title = title(serverName, username, msg, prefix, group)
         val footer = footer(serverName, username, msg, prefix, group)
         val thumbnail = thumbnail(serverName, username, msg, prefix, group, uuid)
@@ -35,12 +37,24 @@ class LogHandler @Inject constructor(val config : ConfigHandler, val proxy : Pro
         ChatLogWebHook(config).sendChatLogWebHook(systemname, discordmsg, usern, avatar, title, footer, thumbnail, image)
     }
 
+    fun finalWebhookSwitch(NewServerName: String, OlderverName: String, username: String, msg: String, prefix: String, group: String, uuid: String){
+
+
+        val discordmsg = switchLog(NewServerName,OlderverName, username, msg, prefix, group, uuid)
+        val usern = switchusername(NewServerName, username, msg, prefix, group, uuid)
+        val avatar = switchavatar(NewServerName, username, msg, prefix, group, uuid)
+        val title = titleS(NewServerName, username, msg, prefix, group)
+        val footer = footer(NewServerName, username, msg, prefix, group)
+        val thumbnail = thumbnail(NewServerName, username, msg, prefix, group, uuid)
+        val image = image(NewServerName, username, msg, prefix, group, uuid)
+
+        SwitchLogWebHook(config).sendSwitchLogWebHook(discordmsg, usern, avatar, title, footer, thumbnail, image)
+    }
+
     fun finalWebhookBot(serverName: String, username: String, msg: String, prefix: String, group: String, uuid: String, systemname: String){
 
 
         val discordmsg = chatLog(serverName, username, msg, prefix, group)
-        val usern = username(serverName, username, msg, prefix, group, uuid)
-        val avatar = avatar(serverName, username, msg, prefix, group, uuid)
         val title = title(serverName, username, msg, prefix, group)
         val footer = footer(serverName, username, msg, prefix, group)
         val thumbnail = thumbnail(serverName, username, msg, prefix, group, uuid)
@@ -61,26 +75,14 @@ class LogHandler @Inject constructor(val config : ConfigHandler, val proxy : Pro
         Bot(config, proxy).sendEmbedSwitchLog(title, discordmsg, footer, thumbnail, image)
     }
 
-    fun finalWebhookSwitch(NewServerName: String, OlderverName: String, username: String, msg: String, prefix: String, group: String, uuid: String){
 
-
-        val discordmsg = switchLog(NewServerName,OlderverName, username, msg, prefix, group, uuid)
-        val usern = username(NewServerName, username, msg, prefix, group, uuid)
-        val avatar = avatar(NewServerName, username, msg, prefix, group, uuid)
-        val title = titleS(NewServerName, username, msg, prefix, group)
-        val footer = footer(NewServerName, username, msg, prefix, group)
-        val thumbnail = thumbnail(NewServerName, username, msg, prefix, group, uuid)
-        val image = image(NewServerName, username, msg, prefix, group, uuid)
-
-        SwitchLogWebHook(config).sendSwitchLogWebHook(discordmsg, usern, avatar, title, footer, thumbnail, image)
-    }
 
     fun finalWebhookDc(NewServerName: String, username: String, msg: String, prefix: String, group: String, uuid: String){
 
 
         val discordmsg = dcLog(NewServerName,username, msg, prefix, group, uuid)
-        val usern = username(NewServerName, username, msg, prefix, group, uuid)
-        val avatar = avatar(NewServerName, username, msg, prefix, group, uuid)
+        val usern = switchusername(NewServerName, username, msg, prefix, group, uuid)
+        val avatar = switchavatar(NewServerName, username, msg, prefix, group, uuid)
         val title = titleS(NewServerName, username, msg, prefix, group)
         val footer = footer(NewServerName, username, msg, prefix, group)
         val thumbnail = thumbnail(NewServerName, username, msg, prefix, group, uuid)
@@ -139,9 +141,9 @@ class LogHandler @Inject constructor(val config : ConfigHandler, val proxy : Pro
         return finalmsg
     }
 
-    fun username (serverName: String, sender: String, message: String, prefix: String, group: String, uuid: String): String {
+    fun switchusername (serverName: String, sender: String, message: String, prefix: String, group: String, uuid: String): String {
 
-        var finalmsg = username
+        var finalmsg = switchusername
             .replace("{server}", serverName)
             .replace("{playername}", sender)
             .replace("{prefix}", finalprefix(prefix))
@@ -150,9 +152,31 @@ class LogHandler @Inject constructor(val config : ConfigHandler, val proxy : Pro
             .replace("{uuid}", uuid)
         return finalmsg
     }
-    fun avatar (serverName: String, sender: String, message: String, prefix: String, group: String, uuid: String): String {
+    fun chatusername (serverName: String, sender: String, message: String, prefix: String, group: String, uuid: String): String {
 
-        var finalmsg = avatar
+        var finalmsg = chatusername
+            .replace("{server}", serverName)
+            .replace("{playername}", sender)
+            .replace("{prefix}", finalprefix(prefix))
+            .replace("{message}", message)
+            .replace("{group}", group)
+            .replace("{uuid}", uuid)
+        return finalmsg
+    }
+    fun chatavatar (serverName: String, sender: String, message: String, prefix: String, group: String, uuid: String): String {
+
+        var finalmsg = chatavatar
+            .replace("{server}", serverName)
+            .replace("{playername}", sender)
+            .replace("{prefix}", finalprefix(prefix))
+            .replace("{message}", message)
+            .replace("{group}", group)
+            .replace("{uuid}", uuid)
+        return finalmsg
+    }
+    fun switchavatar (serverName: String, sender: String, message: String, prefix: String, group: String, uuid: String): String {
+
+        var finalmsg = switchavatar
             .replace("{server}", serverName)
             .replace("{playername}", sender)
             .replace("{prefix}", finalprefix(prefix))

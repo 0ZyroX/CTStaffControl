@@ -51,13 +51,20 @@ class ConfigHandler @Inject constructor(){
     var discordbotactivityType : String = ""
     var discordbotactivityMessage : String = ""
 
-    var discordwebhook : Map<String, Any> = mapOf()
+    var discordchatlogwebhook : Map<String, Any> = mapOf()
+    var discordswitchlogwebhook : Map<String, Any> = mapOf()
     var discordembed : Map<String, Any> = mapOf()
-    var discordwebhookAvatar : String = ""
+
+    var discordchatlogwebhookAvatar : String = ""
+    var discordchatlogwebhookUrl : String = ""
+    var discordchatlogwebhookUsername : String = ""
+
+    var discordswitchlogwebhookAvatar : String = ""
+    var discordswitchlogwebhookUrl : String = ""
+    var discordswitchlogwebhookUsername : String = ""
+
     var discordwebhookThumbnail : String = ""
     var discordwebhookImage : String = ""
-    var discordwebhookUrl : String = ""
-    var discordwebhookUsername : String = ""
     var discordwebhookFooter : String = ""
     var discordwebhookTag : String = ""
 
@@ -202,13 +209,20 @@ class ConfigHandler @Inject constructor(){
             discordbotactivityType = discordbotactivity["type"] as? String ?: "WATCHING"
             discordbotactivityMessage = discordbotactivity["message"] as? String ?: "Watching {online} Player"
 
-            discordwebhook = discord["webhook"] as? Map<String, Any> ?: emptyMap()
+            discordchatlogwebhook = discord["chatlog-webhook"] as? Map<String, Any> ?: emptyMap()
+            discordswitchlogwebhook = discord["chatlog-webhook"] as? Map<String, Any> ?: emptyMap()
             discordembed = discord["embed"] as? Map<String, Any> ?: emptyMap()
-            discordwebhookAvatar = discordwebhook["avatar"] as? String ?: "https://mc-heads.net/head/{uuid}"
+
+            discordchatlogwebhookAvatar = discordchatlogwebhook["avatar"] as? String ?: "https://mc-heads.net/head/{uuid}"
+            discordchatlogwebhookUsername = discordchatlogwebhook["username"] as? String ?: "{player}"
+            discordchatlogwebhookUrl = discordchatlogwebhook["url"] as? String ?: ""
+
+            discordswitchlogwebhookAvatar = discordswitchlogwebhook["avatar"] as? String ?: "https://mc-heads.net/head/{uuid}"
+            discordswitchlogwebhookUsername = discordswitchlogwebhook["username"] as? String ?: "{player}"
+            discordswitchlogwebhookUrl = discordswitchlogwebhook["url"] as? String ?: ""
+
             discordwebhookThumbnail = discordembed["thumbnail"] as? String ?: ""
             discordwebhookImage = discordembed["image"] as? String ?: ""
-            discordwebhookUsername = discordwebhook["username"] as? String ?: "{player}"
-            discordwebhookUrl = discordwebhook["url"] as? String ?: ""
             discordwebhookFooter = discordembed["footer"] as? String ?: "Powered By CTStaffControl"
             discordwebhookTag = discordembed["tag"] as? String ?: ""
 

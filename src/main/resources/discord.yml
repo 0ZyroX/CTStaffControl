@@ -18,7 +18,13 @@ discord:
       type: "WATCHING"
       message: "Watching {online} Player"
 
-  webhook:
+  chatlog-webhook:
+
+    # Placeholder {player} {uuid}
+    avatar: "https://mc-heads.net/head/{uuid}"
+    username: "{playername}"
+    url: ""
+  switchlog-webhook:
 
     # Placeholder {player} {uuid}
     avatar: "https://mc-heads.net/head/{uuid}"

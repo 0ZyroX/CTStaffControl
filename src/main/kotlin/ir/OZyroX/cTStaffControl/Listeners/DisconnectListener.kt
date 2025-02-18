@@ -18,7 +18,7 @@ class DisconnectListener @Inject constructor(val proxy: ProxyServer, private val
     private var db = DBManager()
 
     @Subscribe
-    fun onPlayerDisconnect (event: DisconnectEvent){
+    fun onPlayerDisconnect(event: DisconnectEvent) {
         val player = event.player
         val (group, prefix, weight) = configHandler.getPlayerGroupInfo(player)
         val newServerName = SwitchListener(proxy, configHandler).playerServer.toString()
@@ -38,18 +38,18 @@ class DisconnectListener @Inject constructor(val proxy: ProxyServer, private val
                 }
             }
             db.updateLastOnline(player.uniqueId.toString())
-        }
-        val check = CheckEnable(configHandler).check()
-        if (check) {
-            if (configHandler.discordmoduleSwitch && configHandler.discordmode == "WEBHOOK") {
-                LogHandler(configHandler, proxy).finalWebhookDc(
-                    newServerName,
-                    player.username,
-                    configHandler.switchMessage,
-                    prefix,
-                    group,
-                    player.uniqueId.toString()
-                )
+            val check = CheckEnable(configHandler).check()
+            if (check) {
+                if (configHandler.discordmoduleSwitch && configHandler.discordmode == "WEBHOOK") {
+                    LogHandler(configHandler, proxy).finalWebhookDc(
+                        newServerName,
+                        player.username,
+                        configHandler.switchMessage,
+                        prefix,
+                        group,
+                        player.uniqueId.toString()
+                    )
+                }
             }
         }
 

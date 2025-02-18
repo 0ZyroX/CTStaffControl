@@ -14,7 +14,7 @@ class SwitchLogWebHook @Inject constructor(val config : ConfigHandler){
     }
 
 
-    val url = config.discordwebhookUrl
+    val url = config.discordswitchlogwebhookUrl
     val tag = config.discordwebhookTag
 
     fun sendSwitchLogWebHook(message: String, username : String, avatar : String, title: String, footer : String, thumbnail: String,Image: String){
